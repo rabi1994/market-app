@@ -1,6 +1,7 @@
 from rest_framework import status,viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,action
+from django.db.models import Q
 from ..models import Customer
 from ..serializers import CustomerUserSerializer,UserSerializer
 import logging
@@ -24,25 +25,49 @@ def setData(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 '''
+def delete_user(user):
+        user.delete()
+        logging.warning("user got deleted because failed to create customer")
 class CustomerViewSet(viewsets.ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerUserSerializer
-    
+    '''
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        email = self.request.query_params.get('email',None)
+        phone = self.request.query_params.get('phone',None)
+
+        if email:
+            queryset = queryset.filter(email=email)
+        elif phone:
+            queryset = queryset.filter(phone=phone)
+        return queryset
+    '''
+          
     def create(self, request, *args, **kwargs):
         
         userSerializer = UserSerializer(data=request.data.pop('user'))
+       
         if userSerializer.is_valid():
-            userSerializer.save()
-        logging.info(f"from customerViewSet {userSerializer.data}")
+            user = userSerializer.save()
+        
         logging.info(f"customer data {userSerializer.data['user_id']}")
         request.data['user_id']=userSerializer.data['user_id']
-        serializer = CustomerUserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            logging.info(f"customer data {serializer.data}")
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        customer_data = request.data
+        customer_data['user'] = user.user_id
+        try:
+            serializer = CustomerUserSerializer(data=customer_data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                delete_user(user)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            delete_user(user)
+            
+            return Exception('failed to create Customer')
+    
     def list(self, request, *args, **kwargs):
         """
         Handle GET requests to list all customers.
