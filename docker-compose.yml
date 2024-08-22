@@ -1,0 +1,38 @@
+version: '3'
+networks:
+  my-network:
+    driver: bridge
+    external: true
+
+services:
+  db:
+    image: mongo
+    container_name: market-app-db
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+  backend:
+    image: backend-image
+    container_name: backend-server
+    build: .
+    command: python backend/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_HOST=db
+      - PYTHONPATH=/app
+    depends_on:
+      - db
+    
+
+    networks:
+      - my-network
+
+
+    
+    
+volumes:
+  mongo_data:

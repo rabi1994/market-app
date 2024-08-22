@@ -1,0 +1,10 @@
+# Logs
+logs/
+*.log
+
+# Python bytecode
+*.pyc
+__pycache__/
+
+# Ignore data directory
+data/
