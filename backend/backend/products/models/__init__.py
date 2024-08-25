@@ -1,1 +1,1 @@
-from .Product import Prodcut
+from .Product import Product
