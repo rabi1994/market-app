@@ -1,0 +1,1 @@
+from .ProductUrls import urlpatterns

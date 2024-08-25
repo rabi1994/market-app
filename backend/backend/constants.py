@@ -15,3 +15,12 @@ DELIVERY_TYPE_CHOICES =  [
         ('scheduled', 'Scheduled'),
         ('same_day', 'Same-Day'),
     ]
+
+DELIVERY_METHOD = [
+    ('TA','TakeAway'),
+    ('DE','Delivery')
+]
+PAYMENT_METHOD = [
+    ('CA','Cash'),
+    ('CC','Credit Card')
+]
