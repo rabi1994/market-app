@@ -4,6 +4,11 @@ ROLE_CHOICES = [
         ('delivery', 'Delivery User'),
     ]
 
+STATUS = [
+    ('open', 'Open'),
+    ('closed', 'Closed'),
+    ('busy', 'Busy'),
+]
 DELIVERY_STATUS_CHOICES = [
    ('available', 'Available'),
         ('busy', 'Busy'),
@@ -23,4 +28,9 @@ DELIVERY_METHOD = [
 PAYMENT_METHOD = [
     ('CA','Cash'),
     ('CC','Credit Card')
+]
+DELIVERY_METHODS = [
+    ('TA','TakeAway'),
+    ('OD','Outsource Delivery'),
+    ('ID','Inner Delivery')
 ]

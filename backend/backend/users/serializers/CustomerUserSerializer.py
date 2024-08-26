@@ -6,7 +6,7 @@ logger = logging.getLogger('myapp')
 class CustomerUserSerializer(serializers.ModelSerializer): 
     class Meta:
         model = Customer
-        fields = ['user','location']
+        fields = '__all__'
         
         
     
