@@ -3,7 +3,7 @@ from .User import User  # Assuming your User model is in user.py
 
 class BusinessUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    business_name = models.CharField(max_length=255)
+    business_id = models.ForeignKey(max_length=255)
     
     
 
