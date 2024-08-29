@@ -1,6 +1,5 @@
 from django.db import models
 import uuid
-from .DeliveryData import DeliveryData
 from ...products.models import Product
 from ...constants import DELIVERY_METHOD,PAYMENT_METHOD
 from datetime import datetime

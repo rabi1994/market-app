@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import Order,DeliveryData
+from ..models import Order
 from datetime import datetime
 from ...products.serializers import ProductSerializer
 from ...users.serializers import CustomerUserSerializer

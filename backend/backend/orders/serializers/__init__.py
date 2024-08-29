@@ -1,2 +1,1 @@
-from .DeliveryDataSerializer import DeliveryDataSerializer
 from .OrderSerializer import OrderSerializer

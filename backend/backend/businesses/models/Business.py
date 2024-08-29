@@ -8,4 +8,5 @@ class Business(models.Model):
     type = models.CharField(max_length=20)
     delivery_method = models.CharField(max_length=2,choices=DELIVERY_METHODS,default="OD")
     status = models.CharField(max_length=10,choices=STATUS,default="closed")
-    #opening_hours= models.One
+    opening_hours= models.JSONField()
+    
